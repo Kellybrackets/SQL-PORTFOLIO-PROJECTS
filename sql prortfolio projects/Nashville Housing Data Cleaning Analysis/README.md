@@ -1,39 +1,27 @@
-# R Data Science Portfolio
+# 🏠 Nashville Housing Data Analysis  
+### *A Business Analyst's Guide to Real Estate Insights*  
 
-Welcome to my R programming portfolio showcasing data analysis, machine learning, and interactive visualization capabilities. This collection demonstrates my expertise in transforming complex data into actionable insights using R's powerful ecosystem.
+**Hey there!** 👋 I'm Keletso, a Business Analyst diving into Nashville's real estate market. This guide will help **you** uncover trends, spot opportunities, and make data-driven decisions—just like I did.  
 
-## 📊 Featured Projects
+---
 
-### 🤖 **Machine Learning**
-**[Predictive Modeling: Classification Engine](Machine-Learning-in-R)**  
-- Built and evaluated classification models (Logistic Regression, Random Forest, XGBoost)  
-- Achieved 92% accuracy in predicting customer churn  
-- Key Techniques:  
-  - Feature engineering with `recipes`  
-  - Hyperparameter tuning using `tidymodels`  
-  - Model interpretation with `DALEX`  
+## 🚀 **Quick Start Guide**  
+### **1. Get the Data**  
+- Download the dataset: [`Nashville_Housing_Data.csv`](imaginary_link.com)  
+- Import into **SQL Server, PostgreSQL, or Python** (Pandas).  
 
-### 🌐 **Interactive Dashboards**  
-**[COVID-19 Tracking Dashboard](Web-Apps-in-R)** | *Shiny Tutorial Series*  
-- Developed real-time pandemic monitoring tool with:  
-  - Interactive leaflet maps of case clusters  
-  - Time-series forecasting visualizations  
-  - Hospital capacity risk indicators  
-- Tech Stack: `Shiny`, `flexdashboard`, `plotly`  
+### **2. Run the Queries**  
+I've prepared **7 powerful SQL queries** (also adaptable to Python). Just copy-paste!  
 
-### 🦠 **Public Health Analytics**  
-**[COVID-19 Outbreak Analysis](Using-R-to-Analyze-COVID-19)**  
-- Processed 500K+ records from Johns Hopkins dataset  
-- Key Deliverables:  
-  - Reproduction number (R₀) estimation  
-  - Mobility vs. infection rate correlation analysis  
-  - Automated PDF report generation with `rmarkdown`  
-
-## 🛠️ Technical Toolkit
-
-```r
-# Sample Code Snippet (Machine Learning)
-library(tidymodels)
-model <- logistic_reg() %>% 
-  set_engine("glmnet") %>% 
-  fit(churn ~ ., data = training_set)
+### **3. Visualize & Share**  
+- Use **Power BI, Tableau, or Excel** for dashboards.  
+- Example:  
+  ```python
+  import pandas as pd
+  import matplotlib.pyplot as plt
+  df = pd.read_csv("Nashville_Housing_Data.csv")
+  df.groupby('LandUse')['SalePrice'].mean().plot(kind='bar')
+  plt.title("Avg Price by Property Type")
+  plt.show()
+  ```
+  
