@@ -1,39 +1,46 @@
-# R Data Science Portfolio
+# 📊 SA40 Index Analysis Toolkit  
+*Business Analyst's Playbook for Market Insights*  
 
-Welcome to my R programming portfolio showcasing data analysis, machine learning, and interactive visualization capabilities. This collection demonstrates my expertise in transforming complex data into actionable insights using R's powerful ecosystem.
+**Hi there!** I'm Keletso, a business analyst specializing in financial markets. This toolkit helps you extract powerful insights from South Africa's SA40 index data (2001-2012). Let me walk you through how to turn raw numbers into actionable intelligence.
 
-## 📊 Featured Projects
+---
 
-### 🤖 **Machine Learning**
-**[Predictive Modeling: Classification Engine](Machine-Learning-in-R)**  
-- Built and evaluated classification models (Logistic Regression, Random Forest, XGBoost)  
-- Achieved 92% accuracy in predicting customer churn  
-- Key Techniques:  
-  - Feature engineering with `recipes`  
-  - Hyperparameter tuning using `tidymodels`  
-  - Model interpretation with `DALEX`  
+## 🛠️ Tech Stack  
+Here's what powers this analysis:  
 
-### 🌐 **Interactive Dashboards**  
-**[COVID-19 Tracking Dashboard](Web-Apps-in-R)** | *Shiny Tutorial Series*  
-- Developed real-time pandemic monitoring tool with:  
-  - Interactive leaflet maps of case clusters  
-  - Time-series forecasting visualizations  
-  - Hospital capacity risk indicators  
-- Tech Stack: `Shiny`, `flexdashboard`, `plotly`  
+```
+    A[SQL] --> B[Window Functions]
+    A --> C[CTEs]
+    A --> D[Aggregations]
+```
 
-### 🦠 **Public Health Analytics**  
-**[COVID-19 Outbreak Analysis](Using-R-to-Analyze-COVID-19)**  
-- Processed 500K+ records from Johns Hopkins dataset  
-- Key Deliverables:  
-  - Reproduction number (R₀) estimation  
-  - Mobility vs. infection rate correlation analysis  
-  - Automated PDF report generation with `rmarkdown`  
+🔍 SQL Principles in Action
+1. Window Functions (My Secret Weapon)
+```sql
+SELECT 
+    Date,
+    SA40,
+    AVG(SA40) OVER (ORDER BY Date ROWS BETWEEN 29 PRECEDING AND CURRENT ROW) AS 30_day_ma
+FROM SA40_index
+Why it matters: Creates rolling calculations without collapsing rows - perfect for moving averages!
+```
 
-## 🛠️ Technical Toolkit
+2. Common Table Expressions (CTEs)
+```sql
+WITH DailyReturns AS (
+    SELECT Date, (SA40 - LAG(SA40) OVER (ORDER BY Date))/LAG(SA40) OVER (ORDER BY Date) AS return
+    FROM SA40_index
+)
+SELECT STDDEV(return) FROM DailyReturns
+Pro tip: Break complex queries into readable chunks like building blocks.
+```
 
-```r
-# Sample Code Snippet (Machine Learning)
-library(tidymodels)
-model <- logistic_reg() %>% 
-  set_engine("glmnet") %>% 
-  fit(churn ~ ., data = training_set)
+3. Conditional Aggregation
+```sql
+SELECT 
+    EXTRACT(YEAR FROM Date) AS year,
+    SUM(CASE WHEN SA40 > LAG(SA40) OVER (ORDER BY Date) THEN 1 ELSE 0 END) AS up_days
+FROM SA40_index
+GROUP BY year
+Business use: Counts bullish vs bearish days - great for sentiment analysis.
+```
