@@ -1,39 +1,68 @@
-# R Data Science Portfolio
+# **Supply Chain Logistics Analytics - Business Analyst's Guide**  
+*By Keletso Ntseno, Supply Chain Business Analyst*  
 
-Welcome to my R programming portfolio showcasing data analysis, machine learning, and interactive visualization capabilities. This collection demonstrates my expertise in transforming complex data into actionable insights using R's powerful ecosystem.
+## **📌 Overview**  
+This repository contains a **comprehensive supply chain logistics analysis** derived from order shipment data. As a Business Analyst, my goal was to extract actionable insights to **optimize shipping efficiency, reduce costs, and improve customer satisfaction**. Below, I explain:  
+- How to **run the queries** (even with basic SQL skills).  
+- **Key findings** and their business impact.  
+- **Next steps** for stakeholders.  
 
-## 📊 Featured Projects
+---
 
-### 🤖 **Machine Learning**
-**[Predictive Modeling: Classification Engine](Machine-Learning-in-R)**  
-- Built and evaluated classification models (Logistic Regression, Random Forest, XGBoost)  
-- Achieved 92% accuracy in predicting customer churn  
-- Key Techniques:  
-  - Feature engineering with `recipes`  
-  - Hyperparameter tuning using `tidymodels`  
-  - Model interpretation with `DALEX`  
+## **🔍 How to Use This Analysis**  
+### **1. Data Source**  
+- **Dataset**: `Supply chain logistics problem.xlsx` (Sheet: `OrderList`)  
+- **Tools Needed**:  
+  - SQL (I used **PostgreSQL**, but any SQL-compatible tool works).  
+  - Excel/Power BI for visualization (optional).  
 
-### 🌐 **Interactive Dashboards**  
-**[COVID-19 Tracking Dashboard](Web-Apps-in-R)** | *Shiny Tutorial Series*  
-- Developed real-time pandemic monitoring tool with:  
-  - Interactive leaflet maps of case clusters  
-  - Time-series forecasting visualizations  
-  - Hospital capacity risk indicators  
-- Tech Stack: `Shiny`, `flexdashboard`, `plotly`  
+### **2. Running the Queries**  
+All queries are designed to be **plug-and-play**—just execute them in your SQL environment.  
 
-### 🦠 **Public Health Analytics**  
-**[COVID-19 Outbreak Analysis](Using-R-to-Analyze-COVID-19)**  
-- Processed 500K+ records from Johns Hopkins dataset  
-- Key Deliverables:  
-  - Reproduction number (R₀) estimation  
-  - Mobility vs. infection rate correlation analysis  
-  - Automated PDF report generation with `rmarkdown`  
+#### **Example Setup (for non-technical users):**  
+1. **Upload data** to a database (e.g., Google BigQuery, MySQL, or even Excel + Power Query).  
+2. **Run queries** like this one to get started:  
+   ```sql
+   -- Total Orders, Weight, and Units (Basic)
+   SELECT 
+       COUNT(*) AS Total_Orders,
+       SUM(Weight) AS Total_Weight_Shipped,
+       SUM([Unit quantity]) AS Total_Units_Shipped
+   FROM OrderList;
+   ```
+### 📊 Key Insights & Business Impact
+***1. Customer Prioritization***
+Finding: V55555_53 accounts for ~70% of orders.
 
-## 🛠️ Technical Toolkit
+Action:
 
-```r
-# Sample Code Snippet (Machine Learning)
-library(tidymodels)
-model <- logistic_reg() %>% 
-  set_engine("glmnet") %>% 
-  fit(churn ~ ., data = training_set)
+Negotiate bulk discounts with carriers for this customer.
+
+Assign a dedicated logistics coordinator to streamline their shipments.
+
+***2. Carrier Performance***
+Finding: V44_3 has a 12% late shipment rate.
+
+Action:
+
+Meet with the carrier to identify bottlenecks (e.g., port delays).
+
+Benchmark against alternative carriers (e.g., FedEx, DHL).
+
+***3. Cost Optimization***
+Finding: Top 5% of shipments by weight drive 30% of freight costs.
+
+Action:
+
+Implement weight-tiered pricing with carriers.
+
+Explore pallet consolidation for small-but-heavy orders.
+
+***4. Route Efficiency***
+Finding: PORT09 → PORT09 is the most frequent route (likely internal transfers).
+
+Action:
+
+Audit internal transfers for redundancies.
+
+Consider cross-docking to reduce handling time.
