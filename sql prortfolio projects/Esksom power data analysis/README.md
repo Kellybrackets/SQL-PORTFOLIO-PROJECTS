@@ -1,39 +1,67 @@
-# R Data Science Portfolio
+# Eskom Power Generation Data Analysis (April 2018)
 
-Welcome to my R programming portfolio showcasing data analysis, machine learning, and interactive visualization capabilities. This collection demonstrates my expertise in transforming complex data into actionable insights using R's powerful ecosystem.
+## 📌 Overview
+This repository contains SQL queries and business insights derived from Eskom's hourly power generation and demand data for April 1-11, 2018. The analysis focuses on:
+- Demand patterns
+- Renewable energy contribution
+- Load shedding events
+- Peaking plant costs
+- International power trading
 
-## 📊 Featured Projects
+### 📊 Key Findings
+**Peak demand: 6-8 PM daily (~30,000 MW)**
 
-### 🤖 **Machine Learning**
-**[Predictive Modeling: Classification Engine](Machine-Learning-in-R)**  
-- Built and evaluated classification models (Logistic Regression, Random Forest, XGBoost)  
-- Achieved 92% accuracy in predicting customer churn  
-- Key Techniques:  
-  - Feature engineering with `recipes`  
-  - Hyperparameter tuning using `tidymodels`  
-  - Model interpretation with `DALEX`  
+**Renewables contribute: 5-10% of supply**
 
-### 🌐 **Interactive Dashboards**  
-**[COVID-19 Tracking Dashboard](Web-Apps-in-R)** | *Shiny Tutorial Series*  
-- Developed real-time pandemic monitoring tool with:  
-  - Interactive leaflet maps of case clusters  
-  - Time-series forecasting visualizations  
-  - Hospital capacity risk indicators  
-- Tech Stack: `Shiny`, `flexdashboard`, `plotly`  
+**Load shedding events: April 3 & 6 (peaking at 400 MW)**
 
-### 🦠 **Public Health Analytics**  
-**[COVID-19 Outbreak Analysis](Using-R-to-Analyze-COVID-19)**  
-- Processed 500K+ records from Johns Hopkins dataset  
-- Key Deliverables:  
-  - Reproduction number (R₀) estimation  
-  - Mobility vs. infection rate correlation analysis  
-  - Automated PDF report generation with `rmarkdown`  
+**Peaking plant costs: ~R50 million/day during high demand**
 
-## 🛠️ Technical Toolkit
+## 🛠 Setup Instructions
 
-```r
-# Sample Code Snippet (Machine Learning)
-library(tidymodels)
-model <- logistic_reg() %>% 
-  set_engine("glmnet") %>% 
-  fit(churn ~ ., data = training_set)
+### Option 1: SQL Server
+1. **Upload CSV to SQL Server**:
+   ```sql
+   -- Create table (adjust datatypes as needed)
+   CREATE TABLE Eskom_Power_Data (
+       [Date Time Hour Beginning] DATETIME,
+       [Residual Demand] FLOAT,
+       [Wind] FLOAT,
+       [PV] FLOAT,
+       -- Add all other columns from CSV
+   );
+   
+   -- Bulk import
+   BULK INSERT Eskom_Power_Data
+   FROM 'C:\path\to\ESK2033.csv'
+   WITH (
+       FORMAT = 'CSV',
+       FIRSTROW = 2,
+       FIELDTERMINATOR = ',',
+       ROWTERMINATOR = '\n'
+   );
+    ```
+
+### 🔍 Key Queries
+**All queries are available in the /queries folder. Highlights:**
+
+Peak Demand Identification
+
+```sql
+-- Finds top 10 highest demand hours
+SELECT TOP 10
+    [Date Time Hour Beginning],
+    [Residual Demand] 
+FROM Eskom_Power_Data
+ORDER BY [Residual Demand] DESC;
+Renewable Energy Contribution
+```
+
+```sql
+-- Calculates daily renewable percentage
+SELECT 
+    CAST([Date Time Hour Beginning] AS DATE) AS Date,
+    SUM(Wind + PV + CSP) / SUM([Residual Demand]) * 100 AS Renewable_Pct
+FROM Eskom_Power_Data
+GROUP BY CAST([Date Time Hour Beginning] AS DATE);
+```
