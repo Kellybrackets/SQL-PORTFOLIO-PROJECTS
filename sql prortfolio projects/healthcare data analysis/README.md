@@ -1,39 +1,62 @@
-# R Data Science Portfolio
+# Healthcare Dataset Analysis - Business Analyst Report  
+**Author:** Keletso Ntseno  
 
-Welcome to my R programming portfolio showcasing data analysis, machine learning, and interactive visualization capabilities. This collection demonstrates my expertise in transforming complex data into actionable insights using R's powerful ecosystem.
+---
 
-## 📊 Featured Projects
+## **📌 Overview**  
+As a **Business Analyst**, I analyzed a **healthcare dataset** containing **1,000 patient records** to extract actionable insights for hospital management, insurers, and medical staff. This README explains:  
+✔ **Key business questions** we need to answer  
+✔ **SQL queries** to derive insights  
+✔ **Findings & recommendations** for decision-makers  
+✔ **How to run this analysis** in your own environment  
 
-### 🤖 **Machine Learning**
-**[Predictive Modeling: Classification Engine](Machine-Learning-in-R)**  
-- Built and evaluated classification models (Logistic Regression, Random Forest, XGBoost)  
-- Achieved 92% accuracy in predicting customer churn  
-- Key Techniques:  
-  - Feature engineering with `recipes`  
-  - Hyperparameter tuning using `tidymodels`  
-  - Model interpretation with `DALEX`  
+---
 
-### 🌐 **Interactive Dashboards**  
-**[COVID-19 Tracking Dashboard](Web-Apps-in-R)** | *Shiny Tutorial Series*  
-- Developed real-time pandemic monitoring tool with:  
-  - Interactive leaflet maps of case clusters  
-  - Time-series forecasting visualizations  
-  - Hospital capacity risk indicators  
-- Tech Stack: `Shiny`, `flexdashboard`, `plotly`  
+## **🔍 Business Objectives**  
+### **1. Optimize Hospital Operations**  
+- Which medical conditions are most common?  
+- How are rooms and doctors being utilized?  
+- What’s the breakdown of emergency vs. elective cases?  
 
-### 🦠 **Public Health Analytics**  
-**[COVID-19 Outbreak Analysis](Using-R-to-Analyze-COVID-19)**  
-- Processed 500K+ records from Johns Hopkins dataset  
-- Key Deliverables:  
-  - Reproduction number (R₀) estimation  
-  - Mobility vs. infection rate correlation analysis  
-  - Automated PDF report generation with `rmarkdown`  
+### **2. Financial & Billing Insights**  
+- Which conditions cost the most to treat?  
+- Which insurance providers contribute the most revenue?  
+- Are there billing anomalies (e.g., unusually high/low charges)?  
 
-## 🛠️ Technical Toolkit
+### **3. Patient Care Improvements**  
+- Which medications have the best/worst outcomes?  
+- How long do patients typically stay?  
+- Are test results mostly normal or abnormal?  
 
-```r
-# Sample Code Snippet (Machine Learning)
-library(tidymodels)
-model <- logistic_reg() %>% 
-  set_engine("glmnet") %>% 
-  fit(churn ~ ., data = training_set)
+---
+
+## **💻 How to Run This Analysis**  
+### **Prerequisites**  
+- SQL-compatible database (MySQL, PostgreSQL, SQLite, etc.)  
+- The `healthcare_dataset.csv` file loaded into a table  
+
+### **Step-by-Step Execution**  
+1. **Import the dataset** into your SQL database:  
+   ```sql
+   CREATE TABLE healthcare_data (
+       Name VARCHAR(100),
+       Age INT,
+       Gender VARCHAR(10),
+       Blood_Type VARCHAR(5),
+       Medical_Condition VARCHAR(50),
+       Date_of_Admission DATE,
+       Doctor VARCHAR(100),
+       Hospital VARCHAR(100),
+       Insurance_Provider VARCHAR(50),
+       Billing_Amount DECIMAL(12,2),
+       Room_Number INT,
+       Admission_Type VARCHAR(20),
+       Discharge_Date DATE,
+       Medication VARCHAR(50),
+       Test_Results VARCHAR(20)
+   );
+   
+   -- Load data (syntax varies by database)
+   LOAD DATA INFILE 'healthcare_dataset.csv' INTO TABLE healthcare_data
+   FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+   IGNORE 1 ROWS;
